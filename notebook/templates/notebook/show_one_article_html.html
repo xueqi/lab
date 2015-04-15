@@ -1,0 +1,36 @@
+{% load notebook_tags %}
+<div id="article_{{article.id}}" class="article_container">
+    <div class="author">
+    </div>
+    <div class="title_content">
+        <div class="title_container">
+            <div class="title">
+                {{ article.title }}
+            </div>
+            <div class="article_editor">
+                <span class="article_edit">
+                    <a href="{% url 'notebook:new_article'%}?forum={{article.forum.id}}&mode=edit&article={{article.id}}">Edit</a>
+                </span>
+                <span class='article_delete'>
+                    <a href="{% url 'notebook:view_article' article.id %}?mode=delete">Delete</a>
+                </span>
+            </div>
+        </div>
+        <div class="content">
+            {{article.content|highlight|safe}}
+        </div>
+        <div class="modify_date">
+            update at <span class="modify_date">{{article.update_time}}</span>
+        </div>
+        <div class="attachment">
+            {% for att in article.attachments.all %}
+            <a href="/media/upload/{{att.relative_path}}">
+            {% if att.attachment_type == 'image' %}
+                <img src="/media/upload/{{att.relative_path}}"><br>
+            {% endif %}
+                {{att.name}}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+div#forumlist {
+    margin-right: 10px;
+    border-right: 1px solid;
+}
+div[id^="forum_"] {
+    margin:10px 0px 10px 10px;
+    border: 1px solid;
+    border-right: 0px solid;
+}
+div[id^="forum_"] .title {
+    font-size: 20;
+}

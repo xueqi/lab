@@ -1,0 +1,9 @@
+<div id="forum_{{forum.id}}" {% if forum.parent %} rel="{{forum.parent.id}}" {% endif %}  class="forum">
+    <div class="title">
+    <a href="{% url "notebook:view_forum" forum.id %}">{{forum.title}}</a>
+    </div>
+    <div class="description">
+        {{ forum.description|safe }}
+    </div>
+</div>
+

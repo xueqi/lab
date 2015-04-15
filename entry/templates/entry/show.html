@@ -1,0 +1,16 @@
+{% extends "entry/base.html" %}
+{% block main %}
+<script>
+    $(function() {
+    });
+</script>
+    <hr>
+    <a href = "{% url 'box:show' entry.box.id %}">Back To Box </a>
+    <hr>
+<div id="content">
+    <h3>{{ entry.uid }}</h3>
+    <div><p>{{entry.description}}</p></div>
+    <h3>Location</h3>
+    <div><p>{{ entry.location_as_string }}</p></div>
+</div>
+{% endblock %}

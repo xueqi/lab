@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body %}
+    <div id = "header"> 
+        <a href = "{% url "entry:add" %}">Add Entry </a>
+    </div>
+    <div id = "main"> 
+    {% block main %}
+        place holder
+    {% endblock %}
+    </div>
+{% endblock %}
+

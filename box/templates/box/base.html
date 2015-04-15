@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+    <div id = "header"> 
+        <a href = "{% url "box:add" %}">Add Box</a> | 
+        <a href = "{% url "box:list" %}">Back To List </a>
+    </div>
+    <div id = "main"> 
+    {% block main %}
+        place holder
+    {% endblock %}
+    </div>
+{% endblock %}
+

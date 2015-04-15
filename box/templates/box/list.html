@@ -1,0 +1,6 @@
+{% extends "box/base.html" %}
+{% block main %}
+{% for box in boxes %}
+<li id='box'> <a href = {% url "box:show" box.id %}>{{ box.uid }} </a></li>
+{% endfor %}
+{% endblock %}

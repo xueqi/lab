@@ -1,0 +1,38 @@
+{% extends "box/base.html" %}
+{% block main %}
+<hr>
+<h2>{{ box.uid }}</h2>
+<hr>
+<style>
+    td {
+        width:20px;
+        height:20px;
+        border:solid black 1px;
+    }
+</style>
+<script>
+    $(function() {
+        $("div.cell").each(function(idx, ele) {
+            $(this).appendTo($('td#' + $(this).attr('rel')));
+            });
+    });
+</script>
+<table>
+    {% for row in row_numbers %}
+    <tr>
+    {% for col in col_numbers %}
+        <td id={{row}}{{col}}><td>
+    {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<div>
+{% for entry in box.entry_set.all %}
+<div class='cell' rel="{{entry.location_as_string}}">
+    <a href="{% url "entry:show" entry.id %}">{{ entry.uid }}</a> <a href="{% url 'entry:add' %}?copy={{entry.id}}">copy</a>
+ </div>
+{% endfor %}
+</div>
+<hr>
+<p><a href = {% url "entry:add" %}>Add An Entry </a></p>
+{% endblock %}

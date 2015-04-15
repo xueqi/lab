@@ -1,0 +1,33 @@
+{% extends "notebook/base.html" %}
+{% load notebook_tags %}
+{% load staticfiles %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
+{% endblock %}
+{% block script %}
+<script>
+$(function() {
+    $('div[id^=forum_]').each(function() {
+        var rel = $(this).attr('rel');
+        $(this).appendTo($('div[id=forum_' + rel + ']'));
+
+        });
+});
+</script>
+{% endblock %}
+{% block title %}
+Forum lists
+{% endblock %}
+
+{% block main %}
+        <a href="{% url "admin:notebook_forum_add" %}"> Add New Forum </a>
+        <div id="forumlist">
+
+{% for forum in forums %}
+    {% show_one_forum_div forum %}
+    {% for sub_forum in forum.sub_forums.all %}
+    {% show_one_forum_div sub_forum %}
+    {% endfor %}
+{% endfor %}
+</div>
+{% endblock %}

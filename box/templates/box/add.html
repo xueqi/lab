@@ -1,0 +1,9 @@
+{% extends "box/base.html" %}
+{% block main %}
+<form action = "{% url "box:add" %}" method = "POST"> {% csrf_token %}
+    <table>
+    {{ form.as_table }}<br>
+    <tr><td><input type = "submit"></td></tr>
+    </table>
+</form>
+{% endblock %}

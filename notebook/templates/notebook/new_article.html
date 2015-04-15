@@ -1,0 +1,73 @@
+{% extends "notebook/base.html" %}
+
+
+{% block title %} New Article {% endblock %}
+
+{% block main %}
+<script>
+    $(function(){
+        tinymce.init({
+            selector: "textarea",
+            });
+        function append_input_file_field() {
+            // renumber the input file fields and add new fields
+            var counter = 0;
+            var found_empty = false;
+            $('div#input_attachments input[type=file]').each(function() {
+                if ($(this).val().length == 0) {
+                    if (!found_empty) found_empty = true;
+                    else $(this).remove();
+                    return true;
+                }
+                $(this).attr('id', 'file_' + counter);
+                counter++;
+                });
+            add_input_file_field(counter);
+        }
+        function add_input_file_field(num) {
+            $('<input type="file"></input>').attr('id', 'file_' + num)
+                .attr('name', 'file_' + num)
+                .addClass('input_file')
+                .appendTo($('div#input_attachments'))
+                .change(function(e){
+                    if ($(this).val().length > 0) {
+                        append_input_file_field();
+                        }
+                 })
+                .before($("<br>"));
+
+        }
+        // input files files init
+        add_input_file_field(0);
+        // add event handler when new file added
+        $('div#input_attchments input[type=file]:last').change(function(e){
+                alert($(this).val());
+            if ($(this).val().length > 0) {
+                append_input_file_field();
+                }
+            });
+    });
+</script>
+
+<form action="{% url 'notebook:new_article' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <div id="input_attachments">
+       
+    </div>
+    <input type='hidden' name="forum" value="{{forum.id}}">
+    {% if article_id %}
+        <input type='hidden' name="mode" value="{{mode}}">
+        <input type="hidden" name="article_id" value="{{article_id}}">
+    {% endif %}
+    
+    {% if reply_to %}
+    <input type="hidden" name="reply_to" value="{{reply_to.id}}">
+    {% endif %}
+    <div>
+        <input type="submit" id="submit"><input type="reset" id="reset">
+    </div>
+</form>
+{% endblock %}

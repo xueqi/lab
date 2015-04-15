@@ -1,0 +1,44 @@
+{% extends "notebook/base.html" %}
+
+{% block title %} {{ forum.name }} {% endblock %}
+{% block stylesheet %}
+<style>
+div.article_container {
+    overflow:hidden;
+}
+div.author {
+    float: left;
+    width : 100px;
+    height : 100px;
+}
+div.title_content {
+    float:left;
+}
+div.title {
+    font-weight: bold;
+}
+</style>
+{% endblock %}
+{% block main %}
+<div id="article_list">
+    {% for article in articles %}
+        <div id="article_{{article.id}}" class="article_container">
+            <div class="author">
+            </div>
+            <div class="title_content">
+                <div class="title">
+                    {{ article.title }}
+                </div>
+                <div class="content">
+                    {{article.content|safe}}
+                </div>
+                <div class="attachment">
+                    {% for att in article.attachments.all %}
+                    {{att}}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

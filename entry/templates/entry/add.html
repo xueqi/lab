@@ -1,0 +1,26 @@
+{% extends "entry/base.html" %}
+
+{% block main %}
+<script>
+$(function() {
+    $('select#id_box').change(function () {
+        var bid = $(this).val();
+        $.ajax({
+            url:"{% url 'entry:get_next_row_col'%}",
+            data:{bid:bid},
+            }).done(function(result) {
+                if (result.err == 0) {
+                    $("input#id_row").val(result.row);
+                    $("input#id_col").val(result.col);
+                }
+            });
+        });
+    });
+</script>
+<table>
+    <form action="{% url "entry:add" %}" method = "POST"> 
+        {% csrf_token %}
+        {{ form.as_table }}
+        <tr><td><input type="submit"></td></tr>
+    </form>
+{% endblock %}

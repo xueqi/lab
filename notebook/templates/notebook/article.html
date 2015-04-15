@@ -1,0 +1,59 @@
+{% extends 'notebook/base.html' %}
+{% load notebook_tags %}
+{% load staticfiles %}
+
+{% block title %}{{article.title}}{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/python_highlight.css' %}">
+<style>
+div.article_container {
+    overflow:hidden;
+    border : 1px dotted;
+}
+div.author {
+    float: left;
+    width : 100px;
+    min-height: 50px;
+}
+div.title_content {
+    border : 1px dotted;
+    margin-left:100px;
+}
+div.title {
+    float:left;
+    font-weight: bold;
+}
+div.article_editor {
+    float: right;
+}
+div.content {
+    margin-left: 10px;
+    min-height:40px;
+}
+div.title_container {
+    overflow:hidden;
+    clear:right;
+    margin-top: 10px;
+}
+div.modify_date {
+    width:100%;
+    text-align:right;
+    margin-right:20px;
+}
+div.attachment  img {
+    max-width:100%;
+}
+</style>
+{% endblock %}
+{% block main %}
+<div class="articles_container">
+    <div id="reply_article">
+        <a href="{% url "notebook:new_article" %}?forum={{main_article.forum.id}}&reply_to={{main_article.id}}">Reply</a>
+    </div>
+    {% show_one_article_html main_article %}
+    {% for article in articles %}
+        {% show_one_article_html article %}
+    {% endfor %}
+</div>
+{% endblock %}

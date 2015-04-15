@@ -1,0 +1,89 @@
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>{% block title %} title {% endblock %}</title>
+        <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
+        {% if editor %}
+        <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+        {% endif %}
+        <style>
+            body {
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            div#banner {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                height: 96px;
+                width: 100%;
+                background-color: #0AA;
+            }
+            div#banner #logo {
+                float:left;
+                height: 96px;
+                width: 96px;
+                background-color: #0FF;
+            }
+            div#login {
+                float: right;
+                height: 10px;
+                margin-right: 10px;
+            }
+            div#page_title {
+                padding-top: 10px;
+                height:68px;
+                font-size: 50;
+                text-align: center;
+            }
+            div#nav {
+                position: relative;
+                bottom: 0px;
+                background-color: #AAA;
+                margin-left:96px;
+            }
+            div#page_header {
+                left: 96px;
+            }
+            div#main {
+                position:absolute;
+                top:96px;
+                left:10px;
+                width: 100%;
+                clear: left;
+            }
+        </style>
+        {% block stylesheet %}
+        {% endblock %}
+        {% block script %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="banner">
+            <div id="logo">
+                <a href="{% url 'notebook:index' %}">
+                    <img src="{% static 'images/logo.png' %}">
+                </a>
+            </div>
+            <div id="page_header">
+                <div id="login">
+                    <a href="#"> login </a>
+                </div>
+                <div id="page_title">
+                    Note Book For Projects
+                </div>
+                <div id="nav">&nbsp 
+                    <a href="{% url 'notebook:index' %}">Home</a>
+                    {% for nav in navs %} >
+                    <a href="{{ nav.url}}">{{nav.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div id="main">
+        {% block main %} main {% endblock %}
+        </div>
+    </body>
+</html>

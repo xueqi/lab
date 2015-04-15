@@ -1,0 +1,75 @@
+{% extends "notebook/base.html" %}
+{% load admin_urls %}
+{% load staticfiles %}
+{% load notebook_tags %}
+{% block title %}Forum: {{forum.title}} {% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
+<style>
+div.article_container{
+    border: 1px solid;
+    clear: both;
+    min-height: 30px;
+    text-align: center;
+}
+div.article_id {
+    width:50px;
+    float:left;
+}
+div.article_title {
+    float:left;
+}
+div.banner {
+    min-height : 25px;
+}
+</style>
+
+{% endblock %}
+{% block script %}
+<script>
+$(function() {
+    function show_page_numbers(total_pages, current_page) {
+        var page_div = $('<div>Pages: </div>');
+        if (total_pages == 0) {
+            var pn_ele = $('<span></span>').text('1').addClass('page_number');
+            page_div.append(pn_ele);
+        } else {
+            for (var i = 1; i <= total_pages; i++) {
+                var pn_ele = $('<span></span>').text(i).addClass('page_number');
+                if (i != current_page) 
+                    pn_ele = $('<a></a>').attr('href', "{% url 'notebook:view_forum' forum.id %}?page_number=" + i + "&per_page={{per_page}}").append(pn_ele);
+                page_div.append(pn_ele);
+            }
+        }
+        page_div.attr('id', 'top_page_div').appendTo($('#top_banner'));
+        page_div.clone().attr('id', 'bottom_page_div').appendTo($('#bottom_banner'))
+    }
+    show_page_numbers({{total_pages}}, {{page_number}});
+});
+</script>
+{% endblock %}
+{% block main %}
+    <div id="new_article">
+        <a href="{% url "notebook:new_article" %}?forum={{forum.id}}">Add New Article</a>
+    </div>
+    <div id="forum">
+        {% for sub_forum in forum.sub_forums.all %}
+        {% show_one_forum_div sub_forum %}
+        {% endfor %}
+    </div>
+    <div id="top_banner" class="top banner"></div>
+    <hr>
+    <div id="articles">
+        {% for article in articles %}
+        <div id="article_{{article.id}}" class="article_container"> 
+            <div class="article_id">{{forloop.counter}}</div>
+            <div class="article_title"><a href="{% url "notebook:view_article" article.id %}">{{article.title}}</a></div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <div id="bottom_banner" class="bottom banner">
+    </div>
+   
+{% endblock %}

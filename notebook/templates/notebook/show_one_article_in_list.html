@@ -1,0 +1,4 @@
+<div id="article_{{article.id}}" class="article_container"> 
+    <div class="article_id">{{forloop.counter}}</div>
+    <div class="article_title"><a href="{% url "notebook:view_article" article.id %}">{{article.title}}</a></div>
+</div>
